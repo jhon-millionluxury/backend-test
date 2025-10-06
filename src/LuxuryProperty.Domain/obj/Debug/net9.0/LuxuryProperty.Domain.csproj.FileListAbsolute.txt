@@ -1,0 +1,12 @@
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.AssemblyInfoInputs.cache
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.AssemblyInfo.cs
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.csproj.CoreCompileInputs.cache
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/bin/Debug/net9.0/LuxuryProperty.Domain.deps.json
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/bin/Debug/net9.0/LuxuryProperty.Domain.dll
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/bin/Debug/net9.0/LuxuryProperty.Domain.pdb
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.csproj.AssemblyReference.cache
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.dll
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/refint/LuxuryProperty.Domain.dll
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/LuxuryProperty.Domain.pdb
+/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/Debug/net9.0/ref/LuxuryProperty.Domain.dll

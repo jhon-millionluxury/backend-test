@@ -1,0 +1,292 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.API/LuxuryProperty.API.csproj": {}
+  },
+  "projects": {
+    "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.API/LuxuryProperty.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.API/LuxuryProperty.API.csproj",
+        "projectName": "LuxuryProperty.API",
+        "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.API/LuxuryProperty.API.csproj",
+        "packagesPath": "/home/gesoft/.nuget/packages/",
+        "outputPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/gesoft/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Application/LuxuryProperty.Application.csproj": {
+                "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Application/LuxuryProperty.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Application/LuxuryProperty.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Application/LuxuryProperty.Application.csproj",
+        "projectName": "LuxuryProperty.Application",
+        "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Application/LuxuryProperty.Application.csproj",
+        "packagesPath": "/home/gesoft/.nuget/packages/",
+        "outputPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/gesoft/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj": {
+                "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj"
+              },
+              "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Infrastructure/LuxuryProperty.Infrastructure.csproj": {
+                "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Infrastructure/LuxuryProperty.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj",
+        "projectName": "LuxuryProperty.Domain",
+        "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj",
+        "packagesPath": "/home/gesoft/.nuget/packages/",
+        "outputPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/gesoft/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Infrastructure/LuxuryProperty.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Infrastructure/LuxuryProperty.Infrastructure.csproj",
+        "projectName": "LuxuryProperty.Infrastructure",
+        "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Infrastructure/LuxuryProperty.Infrastructure.csproj",
+        "packagesPath": "/home/gesoft/.nuget/packages/",
+        "outputPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/gesoft/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj": {
+                "projectPath": "/home/gesoft/Datos/desarrollo/millionluxury/LuxuryPropertyAPI/src/LuxuryProperty.Domain/LuxuryProperty.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
