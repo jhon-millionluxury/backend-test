@@ -16,7 +16,6 @@ public class PropertyRepository : IPropertyRepository
     _properties = context.Properties;
   }
 
-
   public async Task<IEnumerable<Property>> GetByFiltersAsync(PropertyFilters filters)
   {
     var filterBuilder = Builders<Property>.Filter;
@@ -25,6 +24,15 @@ public class PropertyRepository : IPropertyRepository
 
     if (!string.IsNullOrEmpty(filters.Name))
       localFilters.Add(filterBuilder.Regex(x => x.Name, new MongoDB.Bson.BsonRegularExpression(filters.Name, "i")));
+
+    if (!string.IsNullOrEmpty(filters.Address))
+      localFilters.Add(filterBuilder.Regex(x => x.Address, new MongoDB.Bson.BsonRegularExpression(filters.Address, "i")));
+
+    if (filters.MinPrice.HasValue)
+      localFilters.Add(filterBuilder.Gte(x => x.Price, filters.MinPrice.Value));
+
+    if (filters.MaxPrice.HasValue)
+      localFilters.Add(filterBuilder.Lte(x => x.Price, filters.MaxPrice.Value));
 
     var finalFilter = localFilters.Count > 0
                 ? filterBuilder.And(localFilters)
