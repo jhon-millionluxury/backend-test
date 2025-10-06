@@ -5,16 +5,10 @@ using MongoDB.Driver;
 
 namespace LuxuryProperty.Infrastructure.Repositories;
 
-public class PropertyRepository : IPropertyRepository
+public class PropertyRepository(MongoDbContext context) : IPropertyRepository
 {
-  private readonly IMongoCollection<Property> _properties;
-  private readonly MongoDbContext _context;
-
-  public PropertyRepository(MongoDbContext context)
-  {
-    _context = context;
-    _properties = context.Properties;
-  }
+  private readonly IMongoCollection<Property> _properties = context.Properties;
+  private readonly MongoDbContext _context = context;
 
   public async Task<IEnumerable<Property>> GetByFiltersAsync(PropertyFilters filters)
   {

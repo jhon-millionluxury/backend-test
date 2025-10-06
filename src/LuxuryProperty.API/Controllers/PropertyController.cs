@@ -1,6 +1,8 @@
 using LuxuryProperty.Application.Services;
 using LuxuryProperty.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using LuxuryProperty.Application.DTOs;
+using LuxuryProperty.Application.Mappers;
 
 namespace LuxuryProperty.API.Controllers;
 
@@ -11,8 +13,10 @@ public class PropertyController(PropertyService propertyService) : ControllerBas
   private readonly PropertyService _propertyService = propertyService;
 
   [HttpGet]
-  public async Task<IActionResult> GetByFilters([FromQuery] PropertyFilters filters)
+  public async Task<IActionResult> GetByFilters([FromQuery] PropertyFilterDto filtersDto)
   {
+    var filters = filtersDto.ToDomain();
+
     var properties = await _propertyService.GetPropertiesByFiltersAsync(filters);
     return Ok(properties);
   }
