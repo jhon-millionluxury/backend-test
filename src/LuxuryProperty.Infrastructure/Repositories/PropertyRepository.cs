@@ -38,7 +38,16 @@ public class PropertyRepository : IPropertyRepository
                 ? filterBuilder.And(localFilters)
                 : filterBuilder.Empty;
 
-    return await _properties.Find(finalFilter).ToListAsync();
+    int page = filters.Page ?? 1;
+    int pageSize = filters.PageSize ?? 10;
+    int skip = (page - 1) * pageSize;
+
+    return await _properties
+        .Find(finalFilter)
+        .Skip(skip)
+        .Limit(pageSize)
+        .ToListAsync();
+
   }
 
   public async Task<Property?> GetByIdAsync(string id)
