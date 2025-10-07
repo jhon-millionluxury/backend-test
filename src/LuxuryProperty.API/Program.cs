@@ -26,6 +26,7 @@ builder.Services.AddSingleton(sp =>
 // Repositorios
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
 
 // Servicios
 builder.Services.AddScoped<PropertyService>();
@@ -44,8 +45,12 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
   var dbContext = scope.ServiceProvider.GetRequiredService<MongoDbContext>();
-  var seeder = new PropertySeeder(dbContext);
-  await seeder.SeedAsync();
+
+  var propertiesSeeder = new PropertySeeder(dbContext);
+  await propertiesSeeder.SeedAsync();
+
+  var propertyImagesSeeder = new PropertyImagesSeeder(dbContext, scope.ServiceProvider.GetRequiredService<ILogger<PropertyImagesSeeder>>());
+  await propertyImagesSeeder.SeedAsync();
 }
 
 

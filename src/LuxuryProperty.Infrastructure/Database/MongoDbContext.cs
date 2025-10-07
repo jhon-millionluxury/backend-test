@@ -45,4 +45,27 @@ public class MongoDbContext
       _logger.LogError(ex, "❌ Error occurred while seeding properties.");
     }
   }
+
+  public async Task SeedPropertyImagesAsync(IEnumerable<PropertyImage> propertyImages)
+  {
+    var collection = _database.GetCollection<PropertyImage>("PropertyImages");
+
+    try
+    {
+      var count = await collection.CountDocumentsAsync(FilterDefinition<PropertyImage>.Empty);
+      if (count == 0)
+      {
+        await collection.InsertManyAsync(propertyImages);
+        _logger.LogInformation("✅ Inserted {Count} property images into MongoDB.", propertyImages.Count());
+      }
+      else
+      {
+        _logger.LogInformation("ℹ️ Database already contains {Count} property images. Skipping seeding.", count);
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "❌ Error occurred while seeding property images.");
+    }
+  }
 }

@@ -4,12 +4,13 @@ using LuxuryProperty.Infrastructure.Database;
 
 namespace LuxuryProperty.Infrastructure.Repositories;
 
-public class OwnerRepository(MongoDbContext context) : IOwnerRepository
+public class PropertyTraceRepository(MongoDbContext context) : IPropertyTraceRepository
 {
   private readonly MongoDbContext _context = context;
 
-  public async Task CreateAsync(Owner owner)
+  public async Task CreateAsync(PropertyTrace propertyTrace)
   {
-    await _context.Owners.InsertOneAsync(owner);
+    await _context.PropertyTraces.InsertOneAsync(propertyTrace);
   }
+
 }
