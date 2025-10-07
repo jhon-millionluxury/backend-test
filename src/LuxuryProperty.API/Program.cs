@@ -1,11 +1,12 @@
 using DotNetEnv;
 using LuxuryProperty.Application.Services;
 using LuxuryProperty.Domain.Repositories;
+using LuxuryProperty.Infrastructure.Data;
 using LuxuryProperty.Infrastructure.Database;
 using LuxuryProperty.Infrastructure.Repositories;
 using Microsoft.OpenApi.Models;
 
-// Cargar variables del archivo .env
+// Load environment variables from .env file
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-var mongoConnection = Environment.GetEnvironmentVariable("MONGO_URI");
-var mongoDatabaseName = Environment.GetEnvironmentVariable("MONGO_DBNAME");
-builder.Services.AddSingleton(new MongoDbContext(mongoConnection!, mongoDatabaseName!));
+builder.Services.AddSingleton(sp =>
+{
+  var logger = sp.GetRequiredService<ILogger<MongoDbContext>>();
+  var mongoConnection = Environment.GetEnvironmentVariable("MONGO_URI") ?? throw new Exception("The MONGO_URI environment variable is not set.");
+  var mongoDatabaseName = Environment.GetEnvironmentVariable("MONGO_DBNAME") ?? throw new Exception("The MONGO_DBNAME environment variable is not set.");
+  return new MongoDbContext(mongoConnection, mongoDatabaseName, logger);
+});
 
 // Repositorios
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
@@ -28,49 +33,38 @@ builder.Services.AddScoped<PropertyService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Luxury Property API", Version = "v1" });
+  c.SwaggerDoc("v1", new OpenApiInfo { Title = "Luxury Property API", Version = "v1" });
 });
 
 var app = builder.Build();
 
+// If you want to new data for testing, uncomment the following lines
+using (var scope = app.Services.CreateScope())
+{
+  var dbContext = scope.ServiceProvider.GetRequiredService<MongoDbContext>();
+  var seeder = new PropertySeeder(dbContext);
+  await seeder.SeedAsync();
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+  app.MapOpenApi();
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
 
 app.MapControllers();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+  public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
