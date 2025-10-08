@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using LuxuryProperty.Domain.Common;
 using LuxuryProperty.Domain.Entities;
 using LuxuryProperty.Domain.Repositories;
@@ -20,9 +21,16 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
     // dynamic filters
     var filter = new BsonDocument();
     if (!string.IsNullOrEmpty(filters.Name))
-      filter.Add("Name", new BsonDocument("$regex", filters.Name).Add("$options", "i"));
+    {
+      var safeName = Regex.Escape(filters.Name);
+      filter.Add("Name", new BsonDocument("$regex", safeName).Add("$options", "i"));
+    }
+
     if (!string.IsNullOrEmpty(filters.Address))
-      filter.Add("Address", new BsonDocument("$regex", filters.Address).Add("$options", "i"));
+    {
+      var safeAddress = Regex.Escape(filters.Address);
+      filter.Add("Address", new BsonDocument("$regex", safeAddress).Add("$options", "i"));
+    }
 
     if (filters.MinPrice.HasValue || filters.MaxPrice.HasValue)
     {

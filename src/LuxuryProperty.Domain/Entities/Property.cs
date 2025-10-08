@@ -18,4 +18,9 @@ public class Property
   public int Year { get; set; }
   public string Description { get; set; } = null!;
   public string IdOwner { get; set; } = null!;
+  public string[] Features { get; set; } = null!;
+  public bool Featured { get; set; } = false;
+  public int Bedrooms { get; set; }
+  public int Bathrooms { get; set; }
+  public int Sqft { get; set; }
 }

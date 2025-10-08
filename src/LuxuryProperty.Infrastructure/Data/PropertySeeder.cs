@@ -12,10 +12,12 @@ namespace LuxuryProperty.Infrastructure.Data
 
     public async Task SeedAsync()
     {
+      string[] features = ["Bedrooms", "Bathrooms", "Kitchen", "Living Room", "Garage"];
+
       var existingCount = await _dbContext.Properties.CountDocumentsAsync(FilterDefinition<Property>.Empty);
       if (existingCount > 0)
       {
-        _logger.LogWarning("⚠️ Exists property traces. Skipping seeding.");
+        _logger.LogWarning("ℹ️ Database already contains {Count} property traces. Skipping seeding.", existingCount);
         return;
       }
 
@@ -38,11 +40,16 @@ namespace LuxuryProperty.Infrastructure.Data
           IdProperty = Guid.NewGuid().ToString(),
           Name = $"Property {i}",
           Address = $"Street {i}, City X",
-          Price = 100000 + i * 1000,
+          Price = 100000 + i * 100000,
           CodeInternal = $"CODE{i}",
           Year = 2023,
           Description = $"Description of the property {i}",
-          IdOwner = owner.IdOwner
+          IdOwner = owner.IdOwner,
+          Features = [.. features.OrderBy(_ => random.Next()).Take(random.Next(1, features.Length + 1))],
+          Featured = i % 2 == 0,
+          Bedrooms = random.Next(1, 5),
+          Bathrooms = random.Next(1, 5),
+          Sqft = random.Next(500, 10000)
         });
       }
 

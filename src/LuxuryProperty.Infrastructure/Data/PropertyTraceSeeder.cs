@@ -15,7 +15,7 @@ namespace LuxuryProperty.Infrastructure.Data
       var existingCount = await _dbContext.PropertyTraces.CountDocumentsAsync(FilterDefinition<PropertyTrace>.Empty);
       if (existingCount > 0)
       {
-        _logger.LogWarning("⚠️ Exists property traces. Skipping seeding.");
+        _logger.LogWarning("ℹ️ Database already contains {Count} property traces. Skipping seeding.", existingCount);
         return;
       }
 
