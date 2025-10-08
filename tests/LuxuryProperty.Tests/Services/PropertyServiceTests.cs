@@ -2,6 +2,7 @@ using Moq;
 using LuxuryProperty.Application.Services;
 using LuxuryProperty.Domain.Repositories;
 using LuxuryProperty.Domain.Entities;
+using LuxuryProperty.Domain.Common;
 
 namespace LuxuryProperty.Tests.Services
 {
@@ -27,30 +28,62 @@ namespace LuxuryProperty.Tests.Services
         Name = "Luxury",
         Address = null,
         MinPrice = null,
-        MaxPrice = null
+        MaxPrice = null,
+        Page = 1,
+        PageSize = 10
       };
 
-      var properties = new List<Property>
+      var properties = new List<PropertyWithImages>
             {
-                new() { Id = "1", Name = "Luxury Villa", Address = "Miami", Price = 1_000_000 },
-                new() { Id = "2", Name = "Modern Apartment", Address = "New York", Price = 800_000 }
+                new()
+                {
+                    IdProperty = "1",
+                    Name = "Luxury Villa",
+                    Address = "Miami",
+                    Price = 1_000_000,
+                    Images = new List<PropertyImage>
+                    {
+                        new() { IdPropertyImage = "img1", File = "villa1.jpg", Enabled = true }
+                    }
+                },
+                new()
+                {
+                    IdProperty = "2",
+                    Name = "Modern Apartment",
+                    Address = "New York",
+                    Price = 800_000,
+                    Images = new List<PropertyImage>()
+                }
             };
 
+      var filtered = properties
+              .Where(p => p.Name.Contains("Luxury"))
+              .ToList();
+
+      var pagedResult = new PagedResult<PropertyWithImages>
+      {
+        Items = filtered,
+        TotalResults = filtered.Count,
+        TotalPages = 1,
+        CurrentPage = 1
+      };
+
       _repositoryMock
-          .Setup(r => r.GetByFiltersAsync(filters))
-          .ReturnsAsync(properties.Where(p => p.Name.Contains("Luxury")));
+                .Setup(r => r.GetByFiltersAsync(It.IsAny<PropertyFilters>()))
+                .ReturnsAsync(pagedResult);
 
       // Act
-      var result = await _repositoryMock.Object.GetByFiltersAsync(filters);
+      var result = await _service.GetPropertiesByFiltersAsync(filters);
+
 
       // Assert
-      Assert.That(result, Is.Not.Empty);
+      Assert.That(result.Items, Is.Not.Empty);
       Assert.Multiple(() =>
       {
-        Assert.That(result.Count(), Is.EqualTo(1));
-        Assert.That(result.First().Name, Is.EqualTo("Luxury Villa"));
+        Assert.That(result.Items.Count(), Is.EqualTo(1));
+        Assert.That(result.Items.First().Name, Is.EqualTo("Luxury Villa"));
+        Assert.That(result.Items.First().Images, Is.Not.Empty);
       });
-
     }
 
     [Test]
