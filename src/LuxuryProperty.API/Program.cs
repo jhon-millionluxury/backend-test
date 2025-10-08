@@ -23,12 +23,12 @@ builder.Services.AddSingleton(sp =>
   return new MongoDbContext(mongoConnection, mongoDatabaseName, logger);
 });
 
-// Repositorios
+// Repositories
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
 
-// Servicios
+// Services
 builder.Services.AddScoped<PropertyService>();
 
 
