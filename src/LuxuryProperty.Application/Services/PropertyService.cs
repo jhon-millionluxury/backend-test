@@ -1,3 +1,4 @@
+using LuxuryProperty.Domain.Common;
 using LuxuryProperty.Domain.Entities;
 using LuxuryProperty.Domain.Repositories;
 
@@ -7,7 +8,7 @@ public class PropertyService(IPropertyRepository repository)
 {
   private readonly IPropertyRepository _repository = repository;
 
-  public async Task<IEnumerable<Property>> GetPropertiesByFiltersAsync(PropertyFilters filters)
+  public async Task<PagedResult<PropertyWithImages>> GetPropertiesByFiltersAsync(PropertyFilters filters)
       => await _repository.GetByFiltersAsync(filters);
 
   public async Task<Property?> GetPropertyByIdAsync(string id)

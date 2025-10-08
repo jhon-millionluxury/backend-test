@@ -1,47 +1,80 @@
+using LuxuryProperty.Domain.Common;
 using LuxuryProperty.Domain.Entities;
 using LuxuryProperty.Domain.Repositories;
 using LuxuryProperty.Infrastructure.Database;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace LuxuryProperty.Infrastructure.Repositories;
 
 public class PropertyRepository(MongoDbContext context) : IPropertyRepository
 {
-  private readonly IMongoCollection<Property> _properties = context.Properties;
   private readonly MongoDbContext _context = context;
+  private readonly IMongoCollection<Property> _properties = context.Properties;
+  private readonly IMongoCollection<PropertyImage> _propertyImages = context.PropertyImages;
 
-  public async Task<IEnumerable<Property>> GetByFiltersAsync(PropertyFilters filters)
+  public async Task<PagedResult<PropertyWithImages>> GetByFiltersAsync(PropertyFilters filters)
   {
-    var filterBuilder = Builders<Property>.Filter;
+    var pipeline = new List<BsonDocument>();
 
-    var localFilters = new List<FilterDefinition<Property>>();
-
+    // dynamic filters
+    var filter = new BsonDocument();
     if (!string.IsNullOrEmpty(filters.Name))
-      localFilters.Add(filterBuilder.Regex(x => x.Name, new MongoDB.Bson.BsonRegularExpression(filters.Name, "i")));
-
+      filter.Add("Name", new BsonDocument("$regex", filters.Name).Add("$options", "i"));
     if (!string.IsNullOrEmpty(filters.Address))
-      localFilters.Add(filterBuilder.Regex(x => x.Address, new MongoDB.Bson.BsonRegularExpression(filters.Address, "i")));
+      filter.Add("Address", new BsonDocument("$regex", filters.Address).Add("$options", "i"));
 
-    if (filters.MinPrice.HasValue)
-      localFilters.Add(filterBuilder.Gte(x => x.Price, filters.MinPrice.Value));
+    if (filters.MinPrice.HasValue || filters.MaxPrice.HasValue)
+    {
+      var priceFilter = new BsonDocument();
 
-    if (filters.MaxPrice.HasValue)
-      localFilters.Add(filterBuilder.Lte(x => x.Price, filters.MaxPrice.Value));
+      if (filters.MinPrice.HasValue)
+        priceFilter.Add("$gte", filters.MinPrice.Value);
 
-    var finalFilter = localFilters.Count > 0
-                ? filterBuilder.And(localFilters)
-                : filterBuilder.Empty;
+      if (filters.MaxPrice.HasValue)
+        priceFilter.Add("$lte", filters.MaxPrice.Value);
 
-    int page = filters.Page ?? 1;
-    int pageSize = filters.PageSize ?? 10;
-    int skip = (page - 1) * pageSize;
+      filter.Add("Price", priceFilter);
+    }
 
-    return await _properties
-        .Find(finalFilter)
-        .Skip(skip)
-        .Limit(pageSize)
-        .ToListAsync();
+    if (filter.ElementCount > 0)
+      pipeline.Add(new BsonDocument("$match", filter));
 
+    // Lookup to join with Images collection
+    pipeline.Add(new BsonDocument("$lookup", new BsonDocument
+            {
+                { "from", "PropertyImages" },
+                { "localField", "IdProperty" },
+                { "foreignField", "IdProperty" },
+                { "as", "Images" }
+            }));
+
+    // Total count
+    var totalCountPipeline = new List<BsonDocument>(pipeline)
+            {
+                new("$count", "count")
+            };
+
+    var totalCountResult = await _properties.Aggregate<BsonDocument>(totalCountPipeline).FirstOrDefaultAsync();
+    var totalResults = totalCountResult?["count"].AsInt32 ?? 0;
+
+    // Pagination
+    var page = filters.Page ?? 1;
+    var pageSize = filters.PageSize ?? 10;
+    var totalPages = (int)Math.Ceiling((double)totalResults / pageSize);
+
+    pipeline.Add(new("$skip", (page - 1) * pageSize));
+    pipeline.Add(new("$limit", pageSize));
+
+    var results = await _properties.Aggregate<PropertyWithImages>(pipeline).ToListAsync();
+
+    return new PagedResult<PropertyWithImages>
+    {
+      CurrentPage = page,
+      TotalPages = totalPages,
+      TotalResults = totalResults,
+      Items = results
+    };
   }
 
   public async Task<Property?> GetByIdAsync(string id)
