@@ -125,5 +125,22 @@ namespace LuxuryProperty.Tests.Services
       // Assert
       _repositoryMock.Verify(r => r.DeleteAsync(id), Times.Once);
     }
+
+    [Test]
+    public async Task GetPropertyByIdAsync_ShouldCallRepository()
+    {
+      // Arrange
+      string id = "123";
+
+      _repositoryMock
+          .Setup(r => r.GetByIdAsync(id))
+          .ReturnsAsync(new PropertyWithImages());
+
+      // Act
+      await _service.GetPropertyByIdAsync(id);
+
+      // Assert
+      _repositoryMock.Verify(r => r.GetByIdAsync(id), Times.Once);
+    }
   }
 }
