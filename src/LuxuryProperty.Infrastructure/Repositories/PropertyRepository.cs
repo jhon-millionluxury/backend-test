@@ -85,9 +85,26 @@ public class PropertyRepository(MongoDbContext context) : IPropertyRepository
     };
   }
 
-  public async Task<Property?> GetByIdAsync(string id)
+  public async Task<PropertyWithImages?> GetByIdAsync(string id)
   {
-    return await _context.Properties.Find(p => p.IdProperty == id).FirstOrDefaultAsync();
+    var pipeline = new List<BsonDocument>
+            {
+                new("$match", new BsonDocument("IdProperty", id)),
+
+                new("$lookup", new BsonDocument
+                {
+                    { "from", "PropertyImages" },
+                    { "localField", "IdProperty" },
+                    { "foreignField", "IdProperty" },
+                    { "as", "Images" }
+                }),
+            };
+
+    var result = await _properties
+        .Aggregate<PropertyWithImages>(pipeline)
+        .FirstOrDefaultAsync();
+
+    return result;
   }
 
   public async Task CreateAsync(Property property)

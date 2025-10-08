@@ -11,7 +11,7 @@ public class PropertyService(IPropertyRepository repository)
   public async Task<PagedResult<PropertyWithImages>> GetPropertiesByFiltersAsync(PropertyFilters filters)
       => await _repository.GetByFiltersAsync(filters);
 
-  public async Task<Property?> GetPropertyByIdAsync(string id)
+  public async Task<PropertyWithImages?> GetPropertyByIdAsync(string id)
   => await _repository.GetByIdAsync(id);
 
   public async Task CreatePropertyAsync(Property property)

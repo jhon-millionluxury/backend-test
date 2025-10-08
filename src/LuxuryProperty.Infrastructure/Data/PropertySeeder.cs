@@ -43,7 +43,7 @@ namespace LuxuryProperty.Infrastructure.Data
           Price = 100000 + i * 100000,
           CodeInternal = $"CODE{i}",
           Year = 2023,
-          Description = $"Description of the property {i}",
+          Description = $"Description of the property {i}. Proident in consequat sunt laborum officia ea ullamco labore ad laborum dolore quis. Ad velit consequat fugiat dolor. Exercitation aute exercitation do ad mollit nisi aliqua id Lorem sit minim consequat amet consectetur. Sint amet ea irure sint consectetur ut consequat reprehenderit aute amet dolore. Tempor esse velit adipisicing ex adipisicing.",
           IdOwner = owner.IdOwner,
           Features = [.. features.OrderBy(_ => random.Next()).Take(random.Next(1, features.Length + 1))],
           Featured = i % 2 == 0,
