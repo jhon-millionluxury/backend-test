@@ -46,11 +46,17 @@ using (var scope = app.Services.CreateScope())
 {
   var dbContext = scope.ServiceProvider.GetRequiredService<MongoDbContext>();
 
-  var propertiesSeeder = new PropertySeeder(dbContext);
+  var ownersSeeder = new OwnerSeeder(dbContext);
+  await ownersSeeder.SeedAsync();
+
+  var propertiesSeeder = new PropertySeeder(dbContext, scope.ServiceProvider.GetRequiredService<ILogger<PropertySeeder>>());
   await propertiesSeeder.SeedAsync();
 
   var propertyImagesSeeder = new PropertyImagesSeeder(dbContext, scope.ServiceProvider.GetRequiredService<ILogger<PropertyImagesSeeder>>());
   await propertyImagesSeeder.SeedAsync();
+
+  var propertyTraceSeeder = new PropertyTraceSeeder(dbContext, scope.ServiceProvider.GetRequiredService<ILogger<PropertyTraceSeeder>>());
+  await propertyTraceSeeder.SeedAsync();
 }
 
 
@@ -69,7 +75,3 @@ app.UseHttpsRedirection();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-  public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

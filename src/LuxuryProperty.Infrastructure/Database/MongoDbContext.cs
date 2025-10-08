@@ -68,4 +68,50 @@ public class MongoDbContext
       _logger.LogError(ex, "❌ Error occurred while seeding property images.");
     }
   }
+
+  public async Task SeedOwnersAsync(IEnumerable<Owner> owners)
+  {
+    var collection = _database.GetCollection<Owner>("Owners");
+
+    try
+    {
+      var count = await collection.CountDocumentsAsync(FilterDefinition<Owner>.Empty);
+      if (count == 0)
+      {
+        await collection.InsertManyAsync(owners);
+        _logger.LogInformation("✅ Inserted {Count} owners into MongoDB.", owners.Count());
+      }
+      else
+      {
+        _logger.LogInformation("ℹ️ Database already contains {Count} owners. Skipping seeding.", count);
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "❌ Error occurred while seeding owners.");
+    }
+  }
+
+  public async Task SeedPropertyTracesAsync(IEnumerable<PropertyTrace> propertyTraces)
+  {
+    var collection = _database.GetCollection<PropertyTrace>("PropertyTraces");
+
+    try
+    {
+      var count = await collection.CountDocumentsAsync(FilterDefinition<PropertyTrace>.Empty);
+      if (count == 0)
+      {
+        await collection.InsertManyAsync(propertyTraces);
+        _logger.LogInformation("✅ Inserted {Count} property traces into MongoDB.", propertyTraces.Count());
+      }
+      else
+      {
+        _logger.LogInformation("ℹ️ Database already contains {Count} property traces. Skipping seeding.", count);
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "❌ Error occurred while seeding property traces.");
+    }
+  }
 }
